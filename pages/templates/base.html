@@ -1,0 +1,24 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Pages</title>
+  <meta name="description" content="The Pages App">
+  <meta name="teopinillo" content="SitePoint">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+
+<body>
+  <header>
+       <a href="{% url 'home' %}"> Home </a> | 
+	   
+	   <a href="{% url 'about' %}"> About </a>
+  </header>
+  {% block content%}
+  {% endblock content %}
+</body>
+</html>
+
