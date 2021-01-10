@@ -1,21 +1,23 @@
 from django.test import TestCase
+from django.urls import reverse
 from .models import Post
 
 class PostModelTest(TestCase):
 
     def setUp(self):
-        Post.objects.create ( text='just a text')
+        Post.objects.create ( comment ='just a test')
 
-    def test_text_content(self):
+    def test_comment_content(self):
         post = Post.objects.get (id=1)
-        expected_text = post.comment
+        expected_text = f'{post.comment}'
         self.assertEqual(expected_text, 'just a test')
+
 
 
 class HomePageViewTest(TestCase): # new
 
     def setUp(self):
-        Post.objects.create(text='this is another test')
+        Post.objects.create( comment ='this is another test')
 
     def test_view_url_exists_at_proper_location(self):
         resp = self.client.get('/')
