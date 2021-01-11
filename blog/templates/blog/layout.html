@@ -1,0 +1,93 @@
+
+
+<html>
+    <head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <title>Tot</title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+       
+     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+     <link rel="icon" type="image/ico" href="{{ url_for('static', filename='favicon.ico') }}"/>
+        
+     {% block head %}
+     {% endblock %}	
+    </head>
+    <body>
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+          <div class="container">
+             <a class="navbar-brand" href="#">
+             <img class="logo" src="{{url_for('static',filename='tot_icon.png')}}" alt="LOGO"   >
+             </a>
+             <button class="navbar-toggler" gg
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarResponsive"
+                aria-controls="navbarResponsive"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+             </button>	
+             <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                   <!--Case user is authenticated -->
+                   {% if current_user.is_authenticated %}
+                   {% if mode == 1 %}
+                   <li class="nav-item active">{% else %} 
+                   <li class="nav-item"> {% endif %}<a class="nav-link" href="{{ url_for('main_bp.books') }} ">Books</a></li>
+                   {% if mode == 2 %}
+                   <li class="nav-item active">{% else %} 
+                   <li class="nav-item"> {% endif %}<a class="nav-link" href=" {{url_for('main_bp.search' )}} ">Search</a></li>
+                   {% if mode == 3 %}
+                   <li class="nav-item active">{% else %} 
+                   <li class="nav-item"> {% endif %}<a class="nav-link" href=" {{url_for('main_bp.logout' )}} ">Logout</a></li>
+                   {% if mode == 4 %}
+                   <li class="nav-item active">{% else %} 
+                   <li class="nav-item"> {% endif %}<a class="nav-link" href=" {{url_for('main_bp.contact')}} ">Contact</a></li>
+                   {% if mode == 8 %}
+                   <li class="nav-item active">{% else %} 
+                   <li class="nav-item"> {% endif %}<a class="nav-link" href=" {{url_for('main_bp.about'  )}} ">About</a></li>
+                   <li class="nav-item"><a class="nav-link" href="#">Welcome, {{current_user.username }}</a></li>
+                   {% else %}
+                   {% if mode == 5 %}
+                   <li class="nav-item active">{% else %}
+                   <li class="nav-item">  {% endif %} <a class="nav-link" href=" {{ url_for('main_bp.index'    ) }} ">Home    </a></li>
+                   {% if mode == 6 %}
+                   <li class="nav-item active">{% else %}
+                   <li class="nav-item">  {% endif %} <a class="nav-link" href=" {{ url_for('auth_bp.login'    ) }} ">Login   </a></li>
+                   {% if mode == 7 %}
+                   <li class="nav-item active">{% else %}
+                   <li class="nav-item">  {% endif %} <a class="nav-link" href=" {{ url_for('auth_bp.register' ) }} ">Register</a></li>
+                   {% if mode == 4 %}
+                   <li class="nav-item active">{% else %}
+                   <li class="nav-item">  {% endif %} <a class="nav-link" href=" {{ url_for('main_bp.contact'  ) }} ">Contact </a></li>
+                   {% if mode == 8 %}
+                   <li class="nav-item active">{% else %}
+                   <li class="nav-item">  {% endif %} <a class="nav-link" href=" {{url_for('main_bp.about'     ) }} ">About   </a></li>
+                   {% endif %}
+                </ul>
+             </div>
+          </div>
+       </nav>
+       <!--reference-->
+       <!--https://pythonise.com/series/learning-flask/flask-message-flashing-->
+       <!--https://www.tutorialrepublic.com/twitter-bootstrap-tutorial/bootstrap-alerts.php-->
+       <div class="container">
+          {% for message in get_flashed_messages() %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">	   
+             <button type="button" class="close" data-dismiss="alert">&times;</button>
+             <span>{{ message }}</span>
+          </div>
+          {% endfor %} 
+       </div>
+       <hr>
+       {% block content %}
+       {% endblock %}
+    </body>
+ </html>
+ 
+ 
