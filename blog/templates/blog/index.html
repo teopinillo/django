@@ -1,0 +1,36 @@
+{% extends "blog/layout.html" %}
+
+{% block content %}
+
+{% for post in posts %}
+<div class="row rounded" id="post">
+    <div class="col-md">
+        <b>
+            <spam id="post-username">@{{post.author}}
+        </b></spam>
+        Posted on: {{ post.timestamp}}<br>
+        {{ post.body }} <br>
+        post.likes.user: {{post.likes.user}}
+        <form action="{% url 'like_post' post.pk %}" method="POST" class="">
+            {% csrf_token %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" class="bi bi-heart-fill"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+            </svg>
+            <spam id='total_likes'>{{post.total_likes}} </spam>
+            <!--show edit button if is the same user-->
+            {% if user == post.author %}
+            <a class="btn btn-primary btn-sm" href="#" role="button">Edit</a>
+            <a class="btn btn-primary btn-sm" href="#" role="button">Delete</a>
+            {% else %}
+            <button type="submit" , name="post_id" , value="{{ post.id }}" ,
+                class="btn btn-primary btn-sm">Like</button>          
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}
