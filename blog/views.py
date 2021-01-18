@@ -37,11 +37,11 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "network/login.html", {
+            return render(request, "blog/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "network/login.html")
+        return render(request, "blog/login.html")
 
 
 def logout_view(request):
@@ -57,7 +57,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "network/register.html", {
+            return render(request, "blog/register.html", {
                 "message": "Passwords must match."
             })
 
@@ -66,13 +66,13 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError:
-            return render(request, "network/register.html", {
+            return render(request, "blog/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "log/register.html")
+        return render(request, "blog/register.html")
 
 # ================ END AUTH SECTION
 
@@ -83,9 +83,11 @@ def contact ( request ):
        username = contact_form.username.data     
        email = contact_form.email.data
        phone = contact_form.phone.data
-    return render ('blog/contact.html', form = contact_form, mode=4)
+    return render ('sendemail/contact.html', form = contact_form, mode=4)
     
   
 def about( request ):
     return render  ('blog/about.html',title='About', mode=8)
   
+def likedPost ( request, postid ):
+    return render ('blog/likepost.html', title="Liked Pots", mode=8)

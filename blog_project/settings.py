@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'sendemail.apps.SendemailConfig',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,5 @@ try:
 except Exception as e:
     pass
 
+DEFAULT_FROM_EMAIL = 'teopinillo@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

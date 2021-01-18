@@ -11,7 +11,7 @@
         Posted on: {{ post.timestamp}}<br>
         {{ post.body }} <br>
         post.likes.user: {{post.likes.user}}
-        <form action="{% url 'like_post' post.pk %}" method="POST" class="">
+        <form action="{% url 'likedpost' post.pk %}" method="POST" class="">
             {% csrf_token %}
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" class="bi bi-heart-fill"
                 viewBox="0 0 16 16">
