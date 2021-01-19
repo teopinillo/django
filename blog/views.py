@@ -11,6 +11,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
+from django.views.generic.edit import CreateView, UpdateView
 
 
 from .models import Post
@@ -20,12 +21,83 @@ class BlogListView (ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'posts'
+    # This limits the number of objects per page and adds a paginator
+    # and page_obj to the context. See the code inindex.html Django Pagination
+    paginate_by = 10
 
 class BlogDetailView ( DetailView):
     model = Post
     template_name = 'blog/post_detail.html'
 
+class BlogCreateView ( CreateView ):
+    model = Post
+    template_name = 'blog/index.html'
+    fields = ['title','author','body']
 
+class BlogUpdateView ( UpdateView):
+     def get_success_url(self):
+        pass #return the appropriate success url   
+
+"""
+class EmployerUpdateView(UpdateView):
+        model = Employer
+        #other stuff.... to be specified
+
+        def get_success_url(self):
+           pk = self.kwargs["pk"]
+           return reverse("view-employer", kwargs={"pk": pk})
+"""
+
+"""
+ In case if want ot use CreateView, you should change urls.py:
+ path("new_post", BlogCreateView.as_view(), name="new_post"),
+
+ and in the html
+
+ <form action="" method="post">
+ {% csrf_token %}
+ {{ form.as_p }}
+ < input type="submit" value="Save">
+ </form>
+"""
+@login_required (login_url='/accounts/login/')
+@require_http_methods(["POST","GET"])
+def index (request):
+    if request.method == "POST":
+        body = request.POST.get('post_body')
+        title = request.POST.get('post_title')
+        print (f'title: {title}')
+        print (f'body: {body}')
+        new_post = Post ( author = request.user, body = body, title = title )
+        new_post.save()
+        print (f'post [{new_post.pk}] saved')
+    
+    posts = Post.objects.all().order_by('-id')
+    paginator = Paginator (posts, 10)
+    page_number = request.GET.get('page')
+    limit_posts = paginator.get_page(page_number)
+    context = {"posts" : limit_posts}
+    return render (request, "blog/index.html", context )
+
+
+@login_required (login_url='/accounts/login/')
+@require_http_methods(["POST"])
+def new_post (request):
+    if request.method == 'POST':
+        body = request.POST.get('post_body')
+        title = request.POST.get('post_title')
+        print (f'title: {title}')
+        print (f'body: {body}')
+        new_post = Post ( author = request.user, body = body, title = title )
+        new_post.save()
+        print (f'post [{new_post.pk}] saved')
+        posts = Post.objects.all().order_by('-id')
+    paginator = Paginator (posts, 10)
+    page_number = request.GET.get('page')
+    limit_posts = paginator.get_page(page_number)
+    context = {"posts" : limit_posts}
+    #return reverse('index', kwargs={'pk': self._id, 'slug': slug})
+    return render (request, "blog/index.html", context)
 
 #==============AUTHENTICATION====================================
 def login_view(request):

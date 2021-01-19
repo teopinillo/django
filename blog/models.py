@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
+
 
 class User(AbstractUser):    
     following = models.ForeignKey(
@@ -17,9 +19,15 @@ class Post (models.Model):
     body = models.TextField()
     timestamp = models.DateTimeField (auto_now = False, auto_now_add=True)
 
+    class Meta:
+        ordering = ['timestamp']
 
     def __str__(self):
         return self.title
+    
+    #tells django where to go after user sucefully send the form
+    def get_absolute_url (self):
+        return reverse('post_detail', args=[str(self.id)])
 
 
 

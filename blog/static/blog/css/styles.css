@@ -36,3 +36,9 @@ post-entry h2 a:hover {
     width: 30%;
     height: auto;
 }
+
+.newPost {
+    margin: 1%;
+    border: 5px solid rgba(18, 17, 164, 0.22);
+    border-radius: 10px;
+}

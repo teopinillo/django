@@ -2,6 +2,26 @@
 
 {% block content %}
 
+<!-- New Post Form 12/21/2020-->
+<div class="row rounded newPost" id="post-form">
+    <div class="col-md">
+
+        <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="post_title">Title</label>
+            <input type="text" class="form-control" placeholder="Title" name="post_title">
+
+            <label for="post_body">New Post</label>
+            <textarea class="form-control" id="post_body" placeholder="My Post" name='post_body' rows="3"></textarea>
+        </div>
+        <button type="submit" value='Save' class="btn btn-primary btn-post">Post</button>
+        </form>
+    </div>
+</div>
+<hr>
+<!-- ****************************** -->
+
 {% for post in posts %}
 <div class="row rounded" id="post">
     <div class="col-md">
@@ -41,9 +61,45 @@
         </form>
         {% endif %}
     </div>
-    
+
 </div>
 <hr>
+
+
 {% endfor %}
+
+<!--Django Pagination-->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-end pagination-style">
+
+        <span class="step-links">
+            {% if posts.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ posts.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+            </span>
+
+            {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">next</a>
+            <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+
+        <!-- <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>-->
+
+    </ul>
+</nav>
+<!-- End Django Pagination -->
 
 {% endblock %}
