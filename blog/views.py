@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,7 +12,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
-# ====== import here the models ==============================
+
 from .models import Post
 #==============================================================
 
@@ -20,6 +20,10 @@ class BlogListView (ListView):
     model = Post
     template_name = 'blog/index.html'
     context_object_name = 'posts'
+
+class BlogDetailView ( DetailView):
+    model = Post
+    template_name = 'blog/post_detail.html'
 
 
 

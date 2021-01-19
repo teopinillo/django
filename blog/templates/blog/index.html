@@ -9,7 +9,19 @@
             <spam id="post-username">@{{post.author}}
         </b></spam>
         Posted on: {{ post.timestamp}}<br>
-        {{ post.body }} <br>
+        <i>{{ post.title }}</i>
+        <div class="body-post">
+            {% if post.body|length > 100 %}
+            {{ post.body|slice:":100" }}
+            . . .
+            <a href="{% url 'post_detail' post.id %}" class="btn btn-primary btn-sm active" role="button"
+                aria-pressed="true">more</a>
+            </a>
+            {% else %}
+            {{ post.body}}
+            {% endif %}
+        </div>
+
         post.likes.user: {{post.likes.user}}
         <form action="{% url 'likedpost' post.pk %}" method="POST" class="">
             {% csrf_token %}
@@ -25,12 +37,13 @@
             <a class="btn btn-primary btn-sm" href="#" role="button">Delete</a>
             {% else %}
             <button type="submit" , name="post_id" , value="{{ post.id }}" ,
-                class="btn btn-primary btn-sm">Like</button>          
+                class="btn btn-primary btn-sm">Like</button>
         </form>
         {% endif %}
     </div>
+    
 </div>
-
+<hr>
 {% endfor %}
 
 {% endblock %}

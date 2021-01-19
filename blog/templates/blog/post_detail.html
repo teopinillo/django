@@ -1,0 +1,24 @@
+{% extends "blog/layout.html" %}
+
+{% block content %}
+ 
+<div class="container about_body">
+  <h3> Post Detail<h3>
+</div>
+
+<div class="post-entry">
+    <h2>{{post.title}}</h2>
+    <p>{{post.body}}</p>
+    <a href="{% url 'index' %}" class="btn btn-primary active" role="button" aria-pressed="true">Back to Posts</a>
+</div>
+
+
+
+
+<span style="position: absolute; bottom: 0pt; right: 0pt; ">
+<div class="bottom_link">
+Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+<div>
+</span>
+
+{% endblock %}

@@ -20,6 +20,7 @@
 
       `ALLOWED_HOSTS = ['*']`
 
+ 5. Heroku Deployment
 
 
  source:Django for Beginners. William S. Vincet

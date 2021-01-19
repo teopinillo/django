@@ -1,0 +1,38 @@
+.post-entry {
+    margin-bottom: 2rem;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.post-entry h2 {
+    margin: 0.5rem 0;
+}
+
+.post entry h2 a,
+.post-entry h2 a:visited {
+    color: blue;
+    text-decoration: none;
+
+}
+
+post-entry p {
+    margin: 0;
+    font-weight: 400;
+}
+
+post-entry h2 a:hover {
+    color: red;
+}
+
+.body-post {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10%;
+    border-color: cadetblue;
+    background-color: lightgoldenrodyellow
+}
+
+.logo {
+    width: 30%;
+    height: auto;
+}
