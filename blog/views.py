@@ -35,7 +35,11 @@ class BlogCreateView ( CreateView ):
     fields = ['title','author','body']
 
 class BlogUpdateView ( UpdateView):
-     def get_success_url(self):
+    model = Post
+    template_name = 'post_edit.html'
+    fields = ['title', 'body']
+
+    def get_success_url(self):
         pass #return the appropriate success url   
 
 """
@@ -78,26 +82,6 @@ def index (request):
     limit_posts = paginator.get_page(page_number)
     context = {"posts" : limit_posts}
     return render (request, "blog/index.html", context )
-
-
-@login_required (login_url='/accounts/login/')
-@require_http_methods(["POST"])
-def new_post (request):
-    if request.method == 'POST':
-        body = request.POST.get('post_body')
-        title = request.POST.get('post_title')
-        print (f'title: {title}')
-        print (f'body: {body}')
-        new_post = Post ( author = request.user, body = body, title = title )
-        new_post.save()
-        print (f'post [{new_post.pk}] saved')
-        posts = Post.objects.all().order_by('-id')
-    paginator = Paginator (posts, 10)
-    page_number = request.GET.get('page')
-    limit_posts = paginator.get_page(page_number)
-    context = {"posts" : limit_posts}
-    #return reverse('index', kwargs={'pk': self._id, 'slug': slug})
-    return render (request, "blog/index.html", context)
 
 #==============AUTHENTICATION====================================
 def login_view(request):
