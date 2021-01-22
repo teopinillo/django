@@ -54,7 +54,7 @@
             <!--show edit button if is the same user-->
             {% if user == post.author %}
             <a class="btn btn-primary btn-sm" href="{% url 'post_edit' post.pk %}" role="button">Edit</a>
-            <a class="btn btn-primary btn-sm" href="#" role="button">Delete</a>
+            <a class="btn btn-primary btn-sm" href="{% url 'post_delete' post.pk %}" role="button">Delete</a>
             {% else %}
             <button type="submit" , name="post_id" , value="{{ post.id }}" ,
                 class="btn btn-primary btn-sm">Like</button>

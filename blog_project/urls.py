@@ -21,3 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include ('sendemail.urls')),
 ]
+
+handler4040 = 'blog.views.handler404'

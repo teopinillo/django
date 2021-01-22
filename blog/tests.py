@@ -40,6 +40,35 @@ class PostModelTest (TestCase):
         self.assertEqual (no_response.status_code, 301)
         self.assertContains (response, 'post test title')
         self.assertTemplateUsed (response, 'blog/post_detail.html')
+    
+    """
+    # in this app new post is integrated in the index or home page
+    def test_post_create_view(self):
+        response = self.client.post (reverse('post_new'),{
+            'title': "new Title",
+            'body' : 'New text',
+            'author' : self.user,
+        })
+
+        self.assertEqual (response.status_code, 200)
+        self.assertContains (response, 'New Title')
+        self.assertContains( response, 'New text')
+    """
+
+    def test_post_update_view ( self):
+        response = self.client.post( reverse ('post_edit', arg='1'),{
+            'title':'Updated title',
+            'body': "Updated text",
+        })
+        self.assertEqual (response.status_code, 302)
+    
+    def test_post_delete_view ( self ):
+        response = self.client.post (
+            reverse ('post_delete', args='1')
+        )
+        self.assertEqual (response.status_code, 302)
+
+
 
 class HomePageViewTest (TestCase):
     def setUp (self):        

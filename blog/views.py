@@ -1,20 +1,18 @@
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView
 
 
-from .models import Post
+from .models import Post, User
 #==============================================================
 
 class BlogListView (ListView):
@@ -36,11 +34,11 @@ class BlogCreateView ( CreateView ):
 
 class BlogUpdateView ( UpdateView):
     model = Post
-    template_name = 'post_edit.html'
+    template_name = 'blog/post_edit.html'
     fields = ['title', 'body']
 
     def get_success_url(self):
-        pass #return the appropriate success url   
+        return reverse ('index')   
 
 """
 class EmployerUpdateView(UpdateView):
@@ -64,7 +62,7 @@ class EmployerUpdateView(UpdateView):
  < input type="submit" value="Save">
  </form>
 """
-@login_required (login_url='/accounts/login/')
+@login_required (login_url='login')
 @require_http_methods(["POST","GET"])
 def index (request):
     if request.method == "POST":
@@ -82,6 +80,15 @@ def index (request):
     limit_posts = paginator.get_page(page_number)
     context = {"posts" : limit_posts}
     return render (request, "blog/index.html", context )
+
+@login_required(login_url='login')
+#@require_http_methods(["POST"])
+def delete_post (request, pk):
+    print ("delete post function")
+    post = get_object_or_404(Post, pk = pk )
+    print ( f"Post pk: post.pk")
+    post.delete()
+    return redirect("index")
 
 #==============AUTHENTICATION====================================
 def login_view(request):
@@ -147,7 +154,13 @@ def contact ( request ):
     
   
 def about( request ):
-    return render  ('blog/about.html',title='About', mode=8)
+    return render  (request, 'blog/about.html',title='About', mode=8)
   
 def likedPost ( request, postid ):
-    return render ('blog/likepost.html', title="Liked Pots", mode=8)
+    return render (request, 'blog/likepost.html', title="Liked Pots", mode=8)
+
+def show404 (request):
+    return render ( request, 'blog/404.html')
+
+#def handler404 (request, 'args,'argv'):
+#	return redirect ('index')
