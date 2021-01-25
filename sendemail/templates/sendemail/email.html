@@ -1,13 +1,31 @@
 {% extends "blog/layout.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Contact Us</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div class="form-actions">
-      <button type="submit">Send</button>
-    </div>
-</form>
+<div id="contactForm" class="contactForm">
+  <div id="contactFormHeader" class="contactFormHeader">
+    <h1>Contact Us</h1>
+  </div>
+  <div id="formBody" class="formBody">
 
+    <form method="post">
+      {% csrf_token %}
+
+      <!--
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><i class="fa fa-lg fa-fw fa-envelope"></i></span>
+        </div>
+        <div class="form-control">
+          {{ form.from_email }}
+        </div>        
+      </div>
+    -->
+      {{ form | crispy }}
+      <div class="form-actions contactFormButton">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

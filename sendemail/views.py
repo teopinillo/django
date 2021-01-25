@@ -22,4 +22,4 @@ def contactView(request):
     return render(request, "sendemail/email.html", {'form': form})
 
 def successView(request):
-    return HttpResponse('Success! Thank you for your message.')
+    return render(request, "sendemail/success.html")

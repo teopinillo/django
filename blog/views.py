@@ -108,7 +108,7 @@ def login_view(request):
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "blog/login.html")
+        return render(request, "registration/login.html")
 
 
 def logout_view(request):
@@ -124,7 +124,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "blog/register.html", {
+            return render(request, "registration/register.html", {
                 "message": "Passwords must match."
             })
 
@@ -139,11 +139,11 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "blog/register.html")
+        return render(request, "registration/register.html")
 
 # ================ END AUTH SECTION
 
-
+""" This view is moved to sendmail app
 def contact ( request ):
     contact_form = ContactForm()  
     if contact_form.validate_on_submit():
@@ -151,7 +151,7 @@ def contact ( request ):
        email = contact_form.email.data
        phone = contact_form.phone.data
     return render ('sendemail/contact.html', form = contact_form, mode=4)
-    
+"""    
   
 def about( request ):
     return render  (request, 'blog/about.html',title='About', mode=8)
